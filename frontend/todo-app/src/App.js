@@ -1,18 +1,12 @@
 import './App.css';
+import TodoApp from './components/TodoApp';
 
 function App() {
   return (
     <div className="App">
-      hello
-      <FirstComponent/>
+      <TodoApp/>
     </div>
   );
-}
-
-const FirstComponent = () => {
-  return ( <div>
-    First component
-  </div>  );
 }
  
 
