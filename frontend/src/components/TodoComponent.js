@@ -7,8 +7,9 @@ import { getUserLoggedIn } from './AuthenticationService';
 const TodoComponent = (p) => {
     console.log(p)
     const {getOneTodo} = useContext(TodoContext);
-    const [todo, setTodo] = useState({});
-    const username = getUserLoggedIn;
+    const [todo, setTodo] = useState(p.location.state);
+    const username = getUserLoggedIn();
+
     useEffect(() => {
         getOneTodo(username,p.match.params.id)
             .then((res) => setTodo(res.data))
