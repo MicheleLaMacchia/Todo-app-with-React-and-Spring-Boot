@@ -18,7 +18,7 @@ const ListTodoComponent = (p) => {
     
     useEffect(() => {
         handleTodosList(username)
-    },[])
+    },[todos.length])
 
     
 
