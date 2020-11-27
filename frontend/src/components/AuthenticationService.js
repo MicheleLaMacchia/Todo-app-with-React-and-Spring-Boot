@@ -8,6 +8,10 @@ export const registerSuccesfulLogin = (username, password) => {
     sessionStorage.setItem('authenticatedUser', username);
 };
 
+export const getUserLoggedIn = () => {
+    return sessionStorage.getItem('authenticatedUser');
+};
+
 export const logout = () => {
     console.log('logout completed');
     sessionStorage.removeItem('authenticatedUser');

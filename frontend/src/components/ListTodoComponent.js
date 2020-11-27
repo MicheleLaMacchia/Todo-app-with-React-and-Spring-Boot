@@ -1,13 +1,27 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
+import {TodoContext} from '../context/TodoContext';
+import { getUserLoggedIn } from './AuthenticationService';
 
-const ListTodoComponent = () => {
+const ListTodoComponent = (p) => {
+    const {getTodos, deleteTodo} = useContext(TodoContext);
+    const [todos, setTodos] = useState([]);
+    const username = getUserLoggedIn();
+    const handleTodosList = (username) => {
+        getTodos(username).then(res => setTodos(res.data))
+    }
+    const handleDeleteClick = (id) => {
+        deleteTodo(username, id).then(() => handleTodosList(username))
+    }
+    const handleUpdateClick = (todo) => {
+        p.history.push(`/todos/${todo.id}`,todo );
+    }
+    
+    useEffect(() => {
+        handleTodosList(username)
+    },[])
 
-    const [todo] = useState(
-        [
-            {id: 1, description: 'Learn React', done: false, targetDate: new Date()},
-            {id: 2, description: 'Read a book', done: false, targetDate: new Date()},
-            {id: 3, description: 'Visit Rome', done: false, targetDate: new Date()},
-        ])
+    
+
 
     return ( 
         <div>
@@ -19,16 +33,20 @@ const ListTodoComponent = () => {
                         <th>id</th>
                         <th>description</th>
                         <th>target date</th>
-                        <th>done</th>
+                        <th>isDone?</th>
+                        <th>update</th>
+                        <th>delete</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {todo.map(e => (
-                        <tr key={e.id}>
-                            <td>{e.id}</td>
-                            <td>{e.description}</td>
-                            <td>{e.targetDate.toString()}</td>
-                            <td>{e.done.toString()}</td>
+                    {todos.map(todo => (
+                        <tr key={todo.id}>
+                            <td>{todo.id}</td>
+                            <td>{todo.description}</td>
+                            <td>{todo.targetDate.toString()}</td>
+                            <td>{todo.done.toString()}</td>
+                            <td><button className="btn btn-primary" onClick={() => handleUpdateClick(todo)}>update</button></td>
+                            <td><button className="btn btn-warning" onClick={() => handleDeleteClick(todo.id)}>delete</button></td>
                         </tr>
                     ))}
                 </tbody>

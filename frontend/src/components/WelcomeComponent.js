@@ -1,17 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
-import { GetMessage } from '../api/MessageHandler';
-
+import { getUserLoggedIn } from './AuthenticationService';
 
 const WelcomeComponent = (p) => {
-    const [message, setMessage] = useState('');
-    useEffect( () => {
-        GetMessage(p.match.params.name)
-        .then(res => setMessage(res.data.message))
-    });
+    
     return ( 
         <div>
-            <h1>{/*<GetMessage p={p.match.params.name}/>*/}{message}</h1>
+            <h1>Benvenuto {getUserLoggedIn()}</h1>
             <div className="container">
             Puoi gestire i tuoi TODO <Link to="/todos">qui</Link>  
             </div>    
@@ -19,4 +14,4 @@ const WelcomeComponent = (p) => {
      );
 }
 
-export default WelcomeComponent;
+export default WelcomeComponent;        
