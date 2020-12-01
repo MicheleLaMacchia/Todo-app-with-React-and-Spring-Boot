@@ -6,17 +6,35 @@ import { getUserLoggedIn } from './AuthenticationService';
 
 const TodoComponent = (p) => {
     console.log(p)
-    const {getOneTodo} = useContext(TodoContext);
-    const [todo, setTodo] = useState(p.location.state);
+    const id = p.match.params.id;
+    const {getOneTodo, updateTodo, createTodo} = useContext(TodoContext);
+    const [todo, setTodo] = useState({});
     const username = getUserLoggedIn();
 
     useEffect(() => {
-        getOneTodo(username,p.match.params.id)
+        getOneTodo(username,id)
             .then((res) => setTodo(res.data))
     },[])
 
     const onSubmit = (val) =>{
-        console.log('onSub',val)
+        console.log(id)
+        if (p.match.params.id === '-1') {
+            createTodo(username,{
+                username: username,
+                description: val.description,
+                targetDate: val.targetDate,
+                isDone: false
+            }).then(() => p.history.push('/todos'))
+        } else {
+            updateTodo(username,id,{
+                id: id,
+                username: username,
+                description: val.description,
+                targetDate: val.targetDate,
+                isDone: false
+            }).then(() => p.history.push('/todos'))
+        }
+        
     };
     const validate = (val) => {
         let errors = {};
@@ -43,6 +61,7 @@ const TodoComponent = (p) => {
                     }}
                     onSubmit={onSubmit}
                     validate={validate}
+                    enableReinitialize={true}
                     // se validateOnChange è true ti valida mentre scrivi 
                     validateOnChange={false}
 

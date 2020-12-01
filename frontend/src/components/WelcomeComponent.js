@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import { getUserLoggedIn } from './AuthenticationService';
 
-const WelcomeComponent = (p) => {
+const WelcomeComponent = () => {
     
     return ( 
         <div>

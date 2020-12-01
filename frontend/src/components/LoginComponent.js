@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Redirect } from "react-router-dom";
-import { registerSuccesfulLogin } from "./AuthenticationService";
+import { JwtregisterSuccesfulLogin, executeJwtAuthenticationService } from "./AuthenticationService";
 
 const LoginComponent = () => {
 
@@ -16,11 +16,22 @@ const LoginComponent = () => {
         setPassword(e.target.value);
     }
     const loginClicked = () => {
+      /* parte per autenticazione solo su front end
         if (username === 'Michele' && password === 'Michele') {
             registerSuccesfulLogin(username, password);
             setSuccMsg(true);setErrMsg(false);} 
-        else{setErrMsg(true);setSuccMsg(false);}
+        else{setErrMsg(true);setSuccMsg(false);}*/
+        /* parte per autenticazione BasicAuth sul server
+        executeBasicAuthenticationService(username,password)
+        .then(() => {registerSuccesfulLogin(username, password);
+                   setSuccMsg(true);setErrMsg(false);})
+        .catch(() => {setErrMsg(true);setSuccMsg(false);})*/
+        executeJwtAuthenticationService(username,password)
+        .then((res) => {console.log(res);JwtregisterSuccesfulLogin(username, res.data.token);
+                   setSuccMsg(true);setErrMsg(false);})
+        .catch(() => {setErrMsg(true);setSuccMsg(false);})
     }
+
         return ( 
             <div>
                 <h1>Login</h1>
@@ -29,7 +40,7 @@ const LoginComponent = () => {
                     {succMsg && <Redirect to={`/welcome/${username}`} />}
                     
                     Username: <input type="text" name="username" value={username} onChange={handleUsername}/> 
-                    Password: <input type="password" name="username" value={password} onChange={handlePassword}/>
+                    Password: <input type="password" name="password" value={password} onChange={handlePassword}/>
                     <button className="btn btn-success" onClick={loginClicked}>Login</button>
                     </div>
             </div>
