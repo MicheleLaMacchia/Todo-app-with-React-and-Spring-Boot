@@ -1,2 +1,2 @@
-# Rodo-app with React and Spring Boot
+# Todo-app with React and Spring Boot
  
