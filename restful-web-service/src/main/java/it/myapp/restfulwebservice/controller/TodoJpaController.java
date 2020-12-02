@@ -17,15 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import it.myapp.restfulwebservice.model.Todo;
-import it.myapp.restfulwebservice.service.TodoHardcoded;
 import it.myapp.restfulwebservice.service.TodoJpaRepository;
 
 @RestController
 @CrossOrigin(origins="http://localhost:4200")
 public class TodoJpaController {
 
-//		@Autowired
-//		TodoHardcoded todoHardcoded;
 		@Autowired
 		TodoJpaRepository todoJpaRepository;
 	

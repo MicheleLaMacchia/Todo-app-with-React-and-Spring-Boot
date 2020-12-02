@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import it.myapp.restfulwebservice.model.Todo;
 
 @Repository
-public interface TodoJpaRepository extends JpaRepository<Todo, Long>{
+public interface TodoJpaRepository extends JpaRepository<Todo, Long> {
 
 	List<Todo> findByUsername(String username);
 	
