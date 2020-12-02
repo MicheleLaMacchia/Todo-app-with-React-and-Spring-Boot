@@ -1,5 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import AuthContextProvider from '../context/AuthContext';
 import TodoContextProvider from '../context/TodoContext';
 import AuthenticatedRoute from './AuthenticatedRoute';
 import ErrorComponent from './ErrorComponent';
@@ -14,6 +15,7 @@ import WelcomeComponent from './WelcomeComponent';
 const TodoApp = () => {
     return ( 
     <div className="TodoApp">
+        <AuthContextProvider>
         <TodoContextProvider>
         <Router>
             <HeaderComponent/>
@@ -29,6 +31,7 @@ const TodoApp = () => {
             <FooterComponent/>
         </Router>
         </TodoContextProvider>
+        </AuthContextProvider>
     </div>  );
 }
 

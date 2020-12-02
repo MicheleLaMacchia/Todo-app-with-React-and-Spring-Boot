@@ -1,9 +1,9 @@
-import { useState } from "react";
+import React, {useContext, useState} from 'react';
 import { Redirect } from "react-router-dom";
-import { JwtregisterSuccesfulLogin, executeJwtAuthenticationService } from "./AuthenticationService";
+import {AuthContext} from '../context/AuthContext';
 
 const LoginComponent = () => {
-
+    const {JwtregisterSuccesfulLogin, executeJwtAuthenticationService} = useContext(AuthContext);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errMsg, setErrMsg] = useState(false);
@@ -16,16 +16,6 @@ const LoginComponent = () => {
         setPassword(e.target.value);
     }
     const loginClicked = () => {
-      /* parte per autenticazione solo su front end
-        if (username === 'Michele' && password === 'Michele') {
-            registerSuccesfulLogin(username, password);
-            setSuccMsg(true);setErrMsg(false);} 
-        else{setErrMsg(true);setSuccMsg(false);}*/
-        /* parte per autenticazione BasicAuth sul server
-        executeBasicAuthenticationService(username,password)
-        .then(() => {registerSuccesfulLogin(username, password);
-                   setSuccMsg(true);setErrMsg(false);})
-        .catch(() => {setErrMsg(true);setSuccMsg(false);})*/
         executeJwtAuthenticationService(username,password)
         .then((res) => {console.log(res);JwtregisterSuccesfulLogin(username, res.data.token);
                    setSuccMsg(true);setErrMsg(false);})

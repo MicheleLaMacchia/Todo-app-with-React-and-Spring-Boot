@@ -1,24 +1,14 @@
 import Axios from "axios";
-import React, { createContext } from 'react';
-import {API_URL, JPA_API_URL} from '../Constants';
+import React, { createContext, useEffect, useState } from 'react';
+import {JPA_API_URL} from '../Constants';
 
 export const TodoContext = createContext();
 
 const TodoContextProvider = (props) => {
-
-    let username = 'Michele';
-    let password = 'Michele';
-    let basicAuthHeader = 'Basic '+ window.btoa(username + ":" + password);
+    const [todos,setTodos] = useState([]);
 
     const getTodos = async (name) => {
-        // qui definisco l'header per la chiamata al server manualmente aggiungendo la config
-        // ma il modo migliore è quello con l'interceptor fatto nell AuthenticationService
-        return await Axios.get(`${JPA_API_URL}/users/${name}/todos`,
-        {
-            headers: {
-                authorization: basicAuthHeader
-            }
-        })
+        return await Axios.get(`${JPA_API_URL}/users/${name}/todos`)
     };
     const getOneTodo = async (name, id) => {
         return await Axios.get(`${JPA_API_URL}/users/${name}/todos/${id}`)
@@ -35,7 +25,8 @@ const TodoContextProvider = (props) => {
             todo)
     }
     return ( 
-        <TodoContext.Provider value={{getTodos, deleteTodo, getOneTodo, updateTodo, createTodo}}>
+        <TodoContext.Provider value={{getTodos, deleteTodo, getOneTodo, updateTodo, 
+                                      createTodo, todos, setTodos}}>
             {props.children}
         </TodoContext.Provider>
       );

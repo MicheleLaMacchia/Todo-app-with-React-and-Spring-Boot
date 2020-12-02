@@ -2,11 +2,12 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import moment from 'moment';
 import React, { useContext, useEffect, useState } from 'react';
 import { TodoContext } from '../context/TodoContext';
-import { getUserLoggedIn } from './AuthenticationService';
+import {AuthContext} from '../context/AuthContext';
 
 const TodoComponent = (p) => {
     console.log(p)
     const id = p.match.params.id;
+    const {getUserLoggedIn} = useContext(AuthContext);
     const {getOneTodo, updateTodo, createTodo} = useContext(TodoContext);
     const [todo, setTodo] = useState({});
     const username = getUserLoggedIn();

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import {logout, isUserLoggedIn, getUserLoggedIn} from './AuthenticationService';
+import {AuthContext} from '../context/AuthContext';
 
 const HeaderComponent = () => {
+    const {isUserLoggedIn, getUserLoggedIn, logout} = useContext(AuthContext);
     const isLoggedIn = isUserLoggedIn();
     const username = getUserLoggedIn();
     return ( 

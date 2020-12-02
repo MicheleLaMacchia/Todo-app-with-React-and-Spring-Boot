@@ -1,11 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {TodoContext} from '../context/TodoContext';
+import {AuthContext} from '../context/AuthContext';
 import moment from 'moment';
-import { getUserLoggedIn } from './AuthenticationService';
+
 
 const ListTodoComponent = (p) => {
-    const {getTodos, deleteTodo} = useContext(TodoContext);
-    const [todos, setTodos] = useState([]);
+    const {getUserLoggedIn} = useContext(AuthContext);
+    const {getTodos, deleteTodo,todos, setTodos} = useContext(TodoContext);
     const username = getUserLoggedIn();
     const handleTodosList = (username) => {
         getTodos(username).then(res => setTodos(res.data))
@@ -22,7 +23,7 @@ const ListTodoComponent = (p) => {
     
     useEffect(() => {
         handleTodosList(username)
-    },[])
+    },[setTodos])
 
 
     return ( 

@@ -1,6 +1,7 @@
 package it.myapp.restfulwebservice.controller;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,15 @@ public class TodoJpaController {
 
 		@Autowired
 		TodoJpaRepository todoJpaRepository;
+		
+	@GetMapping(path = "/jpa/users/reset")
+	public void reset() {
+		System.out.println("reset record");
+		todoJpaRepository.deleteAll();
+		todoJpaRepository.save(new Todo(1L, "Michele", "primo TODO", LocalDate.of(2020, 12, 20), false));
+		todoJpaRepository.save(new Todo(2L, "Michele", "secondo TODO", LocalDate.of(2020, 12, 20), false));
+		todoJpaRepository.save(new Todo(2L, "Michele", "terzo TODO", LocalDate.of(2020, 12, 20), false));
+	}
 	
 	@GetMapping(path = "/jpa/users/{username}/todos")
 	public List<Todo> getAllTodos(@PathVariable("username") String username) {

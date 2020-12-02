@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
-import { getUserLoggedIn } from './AuthenticationService';
+import {AuthContext} from '../context/AuthContext';
 
 const WelcomeComponent = () => {
-    
+    const {getUserLoggedIn} = useContext(AuthContext);
     return ( 
         <div>
             <h1>Benvenuto {getUserLoggedIn()}</h1>
