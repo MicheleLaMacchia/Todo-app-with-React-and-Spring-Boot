@@ -5,7 +5,6 @@ import {JPA_API_URL} from '../Constants';
 export const TodoContext = createContext();
 
 const TodoContextProvider = (props) => {
-    const [todos,setTodos] = useState([]);
 
     const getTodos = async (name) => {
         return await Axios.get(`${JPA_API_URL}/users/${name}/todos`)
@@ -25,8 +24,8 @@ const TodoContextProvider = (props) => {
             todo)
     }
     return ( 
-        <TodoContext.Provider value={{getTodos, deleteTodo, getOneTodo, updateTodo, 
-                                      createTodo, todos, setTodos}}>
+        <TodoContext.Provider value={{getTodos, deleteTodo, getOneTodo, 
+                                      updateTodo, createTodo}}>
             {props.children}
         </TodoContext.Provider>
       );

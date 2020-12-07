@@ -10,8 +10,8 @@ const AuthContextProvider = (props) => {
         return 'Bearer '+ token;
     }
 
-    const executeJwtAuthenticationService = (username,password) => {
-        return Axios.post(`${API_URL}/authenticate`,{
+    const executeJwtAuthenticationService = async (username,password) => {
+        return await Axios.post(`${API_URL}/authenticate`,{
             username, 
             password
         })
@@ -41,10 +41,10 @@ const AuthContextProvider = (props) => {
         }
     };
 
-    const setupAxiosInterceptors = (basicAuthHeader) => {
+    const setupAxiosInterceptors = (header) => {
             Axios.interceptors.request.use((config) => {
                 if (isUserLoggedIn){
-                    config.headers.authorization = basicAuthHeader
+                    config.headers.authorization = header
                 }
                 return config;
             })
