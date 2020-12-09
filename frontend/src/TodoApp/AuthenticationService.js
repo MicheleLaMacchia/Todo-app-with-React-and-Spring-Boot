@@ -5,10 +5,6 @@ export const USER_NAME_SESSION_ATTRIBUTE = 'authenticatedUser';
 
 class AuthenticationService {
 
-    createBasicAuthToken(username, password) {
-        return 'Basic ' + window.btoa(username +':'+password);
-    }
-
     createJwtToken(token) {
         return 'Bearer ' + token;
     }
@@ -16,11 +12,6 @@ class AuthenticationService {
     executeJwtAuthenticationService(username, password) {
         return Axios.post(`${API_URL}/authenticate`,
             {username,password})
-    }
-
-    registerSuccesfulLogin(username, password) {
-        sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE, username)
-        this.setupAxiosInterceptors(this.createBasicAuthToken(username, password));
     }
 
     registerSuccesfulLoginForJwt(username, token) {
