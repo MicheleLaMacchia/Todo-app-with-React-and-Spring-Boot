@@ -67,9 +67,9 @@ class ListTodoComponent extends Component {
                                     todo => 
                                     <tr key={todo.id}>
                                         <td>{todo.id}</td>
-                                        <td>{todo.desc}</td>
-                                        <td>{todo.targetDate.toLocaleDateString()}</td>
-                                        <td>{todo.done.toString()}</td>
+                                        <td>{todo.description}</td>
+                                        <td>{todo.targetDate}</td>
+                                        <td>{todo.done}</td>
                                         <td><button className='btn btn-success' onClick={() => this.updateTodoClicked(todo.id)}>modifica</button></td>
                                         <td><button className='btn btn-warning' onClick={() => this.deleteTodoClicked(todo.id)}>elimina</button></td>
                                     </tr>
@@ -77,7 +77,7 @@ class ListTodoComponent extends Component {
                         </tbody>
                     </table>
                     <div className="row">
-                        <button className="btn btn-success" onClick={() => this.addTodoClicked}>Aggiungi</button>
+                        <button className="btn btn-success" onClick={() => this.addTodoClicked()}>Aggiungi</button>
                     </div>
                 </div>
             </div>

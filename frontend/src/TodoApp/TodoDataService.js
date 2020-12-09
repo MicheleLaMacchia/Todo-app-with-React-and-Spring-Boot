@@ -7,7 +7,7 @@ class TodoDataService extends Component {
         return axios.get(`${JPA_API_URL}/users/${name}/todos`);
     }
     retriveTodo(name, id) {
-        return axios.get(`${JPA_API_URL}users/${name}/todos/${id}`);
+        return axios.get(`${JPA_API_URL}/users/${name}/todos/${id}`);
     }
     deleteTodos(name, id) {
         return axios.delete(`${JPA_API_URL}/users/${name}/todos/${id}`);
