@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import AuthenticationService from './AuthenticationService';
+import {isUserLoggedIn} from './AuthenticationService';
 
-class HeaderComponent extends Component {
-    render() { 
-        const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
+const HeaderComponent = () => {
+    
+    const isUserLoggedIn = isUserLoggedIn();
+
         return ( 
             <header>
                 <nav className='navbar navbar-expand-md navbar-dark bg-dark'>
@@ -20,7 +22,6 @@ class HeaderComponent extends Component {
                 </nav>
             </header>
          );
-    }
 }
-
-export default withRouter(HeaderComponent)
+ 
+export default withRouter(HeaderComponent);

@@ -1,14 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import AuthenticationService from './AuthenticationService';
+import {isUserLoggedIn} from './AuthenticationService';
 
-class AuthenticatedRoute extends Component {
-    render() { 
-        if (AuthenticationService.isUserLoggedIn()) {
-            return <Route {...this.props}/>
-        } else {
-           return <Redirect to="/login"/> 
-        }
+const AuthenticatedRoute = () => {
+    if (isUserLoggedIn()) {
+        return <Route {...this.props}/>
+    } else {
+       return <Redirect to="/login"/> 
     }
 }
  

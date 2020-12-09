@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class ErrorComponent extends Component {
-    render() { 
-        return ( 
-            <div>
-                La pagina non esiste
-            </div>
-         );
-    }
+const ErrorComponent = () => {
+    return ( 
+        <div>
+            La pagina non esiste
+        </div>
+     );
 }
-
+ 
 export default ErrorComponent;

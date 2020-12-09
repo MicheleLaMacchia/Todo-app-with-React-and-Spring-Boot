@@ -1,88 +1,74 @@
-import React, { Component } from 'react';
-import AuthenticationService from './AuthenticationService';
-import TodoDataService from './TodoDataService';
+import React, { useEffect, useState } from 'react';
+import {deleteTodos, retriveAllTodos} from './TodoDataService';
+import {getLoggedInUsername} from './AuthenticationService';
 
-class ListTodoComponent extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            todos: [],
-            message: null
-        }
-        this.deleteTodoClicked = this.deleteTodoClicked.bind(this)
-        this.updateTodoClicked = this.updateTodoClicked.bind(this)
-        this.addTodoClicked = this.addTodoClicked.bind(this)
-        this.refreshTodos = this.refreshTodos.bind(this)
+const ListTodoComponent = () => {
+    const [todos, setTodos] = useState([]);
+    const [message, setMessage] = useState(null);
+    useEffect(() =>{
+        refreshTodos();
+    },[])
+
+    const refreshTodos = () => {
+        let username = getLoggedInUsername();
+        retriveAllTodos(username)
+            .then(response => setTodos(response.data))
     }
 
-    componentDidMount() {
-        this.refreshTodos();
-    }
-
-    refreshTodos() {
-        let username = AuthenticationService.getLoggedInUsername();
-        TodoDataService.retriveAllTodos(username)
-            .then(response => this.setState({
-                todos: response.data
-            }))
-    }
-
-    deleteTodoClicked(id) {
-        let username = AuthenticationService.getLoggedInUsername();
-        TodoDataService.deleteTodos(username,id)
-            .then(response => {
-                this.setState({message: `eliminazione del'elemento n.${id} avvenuta con successo`})
-                this.refreshTodos();
+    const deleteTodoClicked = (id) => {
+        let username = getLoggedInUsername();
+        deleteTodos(username,id)
+            .then(() => {
+                setMessage(`eliminazione del'elemento n.${id} avvenuta con successo`)
+                refreshTodos();
             })
     }
 
-    updateTodoClicked(id) {
+    const updateTodoClicked = (id) => {
         this.props.history.push(`/todos/${id}`)
     }
 
-    addTodoClicked() {
+    const addTodoClicked = () => {
         this.props.history.push(`/todos/-1`)
     }
 
-    render() { 
-        return ( 
-            <div>
-                <h1> List Todo </h1>
-                {this.state.message && <div className='alert alert-success'>{this.state.message}</div>}
-                <div className='container'>
-                    <table className='table'>
-                        <thead>
-                            <tr>
-                                <th>id</th>
-                                <th>descrizione</th>
-                                <th>data di scadenza</th>
-                                <th>completato?</th>
-                                <th>aggiorna</th>
-                                <th>elimina</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                this.state.todos.map(
-                                    todo => 
-                                    <tr key={todo.id}>
-                                        <td>{todo.id}</td>
-                                        <td>{todo.description}</td>
-                                        <td>{todo.targetDate}</td>
-                                        <td>{todo.done.toString()}</td>
-                                        <td><button className='btn btn-success' onClick={() => this.updateTodoClicked(todo.id)}>modifica</button></td>
-                                        <td><button className='btn btn-warning' onClick={() => this.deleteTodoClicked(todo.id)}>elimina</button></td>
-                                    </tr>
-                                )}
-                        </tbody>
-                    </table>
-                    <div className="row">
-                        <button className="btn btn-success" onClick={() => this.addTodoClicked()}>Aggiungi</button>
-                    </div>
+    return ( 
+        <div>
+            <h1> List Todo </h1>
+            {message && <div className='alert alert-success'>{message}</div>}
+            <div className='container'>
+                <table className='table'>
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>descrizione</th>
+                            <th>data di scadenza</th>
+                            <th>completato?</th>
+                            <th>aggiorna</th>
+                            <th>elimina</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            todos.map(
+                                todo => 
+                                <tr key={todo.id}>
+                                    <td>{todo.id}</td>
+                                    <td>{todo.description}</td>
+                                    <td>{todo.targetDate}</td>
+                                    <td>{todo.done.toString()}</td>
+                                    <td><button className='btn btn-success' onClick={() => updateTodoClicked(todo.id)}>modifica</button></td>
+                                    <td><button className='btn btn-warning' onClick={() => deleteTodoClicked(todo.id)}>elimina</button></td>
+                                </tr>
+                            )}
+                    </tbody>
+                </table>
+                <div className="row">
+                    <button className="btn btn-success" onClick={() => addTodoClicked()}>Aggiungi</button>
                 </div>
             </div>
-         );
-    }
+        </div>
+     );
 }
-
+ 
 export default ListTodoComponent;
