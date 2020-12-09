@@ -22,16 +22,18 @@ class LoginComponent extends Component {
     }
 
     loginClicked(e) {
-        if (this.state.username==='Michele' && this.state.password==='123') {
-            AuthenticationService.registerSuccesfulLogin(this.state.username, this.state.password)
-            this.props.history.push(`/welcome/${this.state.username}`)
-        } else {
+        AuthenticationService
+        .executeJwtAuthenticationService(this.state.username, this.state.password
+        ).then((response) =>{
+                AuthenticationService.registerSuccesfulLoginForJwt(this.state.username, response.data.token)
+                this.props.history.push(`/welcome/${this.state.username}`)
+        }).catch(() => {
             console.log('fail login')
             this.setState({
                 showSuccessMessage : false,
                 hasLoginFailed : true
-            }) 
-        }
+            })
+        });
     }
 
     render() { 

@@ -11,6 +11,7 @@ class ListTodoComponent extends Component {
         }
         this.deleteTodoClicked = this.deleteTodoClicked.bind(this)
         this.updateTodoClicked = this.updateTodoClicked.bind(this)
+        this.addTodoClicked = this.addTodoClicked.bind(this)
         this.refreshTodos = this.refreshTodos.bind(this)
     }
 
@@ -37,6 +38,10 @@ class ListTodoComponent extends Component {
 
     updateTodoClicked(id) {
         this.props.history.push(`/todos/${id}`)
+    }
+
+    addTodoClicked() {
+        this.props.history.push(`/todos/-1`)
     }
 
     render() { 
@@ -71,6 +76,9 @@ class ListTodoComponent extends Component {
                                 )}
                         </tbody>
                     </table>
+                    <div className="row">
+                        <button className="btn btn-success" onClick={() => this.addTodoClicked}>Aggiungi</button>
+                    </div>
                 </div>
             </div>
          );
