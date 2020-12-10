@@ -2,7 +2,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {retriveTodo, createTodo, updateTodo} from './TodoDataService';
-import {getLoggedInUsername} from './AuthenticationService';
+import {getLoggedInUsername, setupAxiosInterceptors} from './AuthenticationService';
 
 const TodoComponent = (props) => {
     const [id] = useState(props.match.params.id)
@@ -11,6 +11,7 @@ const TodoComponent = (props) => {
 
     useEffect(()=>{
         let username = getLoggedInUsername();
+        setupAxiosInterceptors();
         retriveTodo(username, id)
             .then(response => {
                 setDescription(response.data.description);
@@ -35,7 +36,6 @@ const TodoComponent = (props) => {
     }
 
     const validate = (val) => {
-        console.log(val)
         let errors = {}
         if(!val.description) {
             errors.description = 'Inserire una descrizione'

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {deleteTodos, retriveAllTodos} from './TodoDataService';
-import {getLoggedInUsername} from './AuthenticationService';
+import {getLoggedInUsername, setupAxiosInterceptors} from './AuthenticationService';
 import moment from 'moment';
 
 const ListTodoComponent = (props) => {
@@ -8,6 +8,7 @@ const ListTodoComponent = (props) => {
     const [message, setMessage] = useState(null);
 
     useEffect(() =>{
+        setupAxiosInterceptors();
         refreshTodos();
     },[])
 

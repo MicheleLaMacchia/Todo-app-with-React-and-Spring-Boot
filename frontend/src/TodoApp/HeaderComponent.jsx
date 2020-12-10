@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import {isUserLoggedIn, logout} from './AuthenticationService';
+import {getLoggedInUsername, isUserLoggedIn, logout} from './AuthenticationService';
 
 const HeaderComponent = () => {
-    
+    const [logo, setLogo] = useState('');
     const isLoggedIn = isUserLoggedIn();
 
-  //  const isUserLoggedIn = isUserLoggedIn();
+    useEffect(() => {
+        console.log('logo')
+        setLogo(getLoggedInUsername())
+    },[isLoggedIn])
+    
 
         return ( 
             <header>
                 <nav className='navbar navbar-expand-md navbar-dark bg-dark'>
-                    <div className='navbar-brand'>LOGO</div>
+                    <div className='navbar-brand'>{logo}</div>
                     <ul className='navbar-nav'>
                         {isLoggedIn && <li ><Link className='nav-link' to='/welcome'>Home</Link></li>}
                         {isLoggedIn && <li ><Link className='nav-link' to='/todos'>Todos</Link></li>}

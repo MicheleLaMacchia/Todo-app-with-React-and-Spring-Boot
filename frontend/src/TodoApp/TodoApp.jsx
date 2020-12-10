@@ -22,7 +22,7 @@ const TodoApp = () => {
               <AuthenticatedRoute path="/welcome/:name" component={WelcomeComponent}/>
               <AuthenticatedRoute path="/todos/:id" component={TodoComponent}/>
               <AuthenticatedRoute path="/todos" component={ListTodoComponent}/>
-              <AuthenticatedRoute path="/logout" component={LogoutComponent}/>
+              <Route path="/logout" component={LogoutComponent}/>
               <Route component={ErrorComponent}/>
           </Switch>
         <FooterComponent/>

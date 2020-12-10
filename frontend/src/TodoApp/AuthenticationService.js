@@ -2,9 +2,12 @@ import Axios from "axios";
 import {API_URL} from '../Constants';
 
 export const USER_NAME_SESSION_ATTRIBUTE = 'authenticatedUser';
+export const TOKEN_SESSION_ATTRIBUTE = 'userToken';
 
     export const createJwtToken = (token) => {
-        return 'Bearer ' + token;
+        const sessionToken = 'Bearer '+token;
+        sessionStorage.setItem(TOKEN_SESSION_ATTRIBUTE, sessionToken)
+        return sessionToken;
     }
 
     export const executeJwtAuthenticationService = (username, password) => {
@@ -14,11 +17,13 @@ export const USER_NAME_SESSION_ATTRIBUTE = 'authenticatedUser';
 
     export const registerSuccesfulLoginForJwt = (username, token) => {
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE, username)
-        setupAxiosInterceptors(createJwtToken(token));
+        createJwtToken(token);
+        setupAxiosInterceptors();
     }
 
     export const logout = () => {
         sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE)
+        sessionStorage.removeItem(TOKEN_SESSION_ATTRIBUTE)
     }
 
     export const isUserLoggedIn = () => {
@@ -39,11 +44,11 @@ export const USER_NAME_SESSION_ATTRIBUTE = 'authenticatedUser';
         } 
     }
 
-    export const setupAxiosInterceptors = (token) => {
+    export const setupAxiosInterceptors = () => {
         Axios.interceptors.request.use(
             (config) => {
                 if(isUserLoggedIn()){
-                    config.headers.authorization = token;
+                    config.headers.authorization = sessionStorage.getItem(TOKEN_SESSION_ATTRIBUTE);
                 }
                 return config;
             } 
