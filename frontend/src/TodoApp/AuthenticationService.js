@@ -1,11 +1,7 @@
 import Axios from "axios";
-import { useContext } from "react";
 import {API_URL} from '../Constants';
-import { AuthContext } from "./AuthenticationContext";
 
 export const USER_NAME_SESSION_ATTRIBUTE = 'authenticatedUser';
-
-// const [token, setToken] = useContext(AuthContext);
 
     export const createJwtToken = (token) => {
         return 'Bearer ' + token;

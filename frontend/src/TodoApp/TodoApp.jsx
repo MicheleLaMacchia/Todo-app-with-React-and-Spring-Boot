@@ -10,13 +10,11 @@ import FooterComponent from './FooterComponent';
 import LogoutComponent from './LogoutComponent';
 import WelcomeComponent from './WelcomeComponent';
 import TodoComponent from './TodoComponent';
-import AuthProvider from './AuthenticationContext';
 
 const TodoApp = () => {
   return ( 
       <div className="TodoApp">
       <Router>
-      <AuthProvider>
         <HeaderComponent/>  
           <Switch>
               <Route path="/" exact component={LoginComponent}/>
@@ -28,7 +26,6 @@ const TodoApp = () => {
               <Route component={ErrorComponent}/>
           </Switch>
         <FooterComponent/>
-      </AuthProvider>  
       </Router>
     </div> 
     );

@@ -7,10 +7,9 @@ import {getLoggedInUsername} from './AuthenticationService';
 const TodoComponent = (props) => {
     const [id] = useState(props.match.params.id)
     const [description, setDescription] = useState('')
-    const [targetDate, setTargetDate] = useState(null)
+    const [targetDate, setTargetDate] = useState('')
 
     useEffect(()=>{
-        console.log('effect hook')
         let username = getLoggedInUsername();
         retriveTodo(username, id)
             .then(response => {
