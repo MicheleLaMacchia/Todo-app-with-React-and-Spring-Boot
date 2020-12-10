@@ -2,9 +2,9 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import {isUserLoggedIn} from './AuthenticationService';
 
-const AuthenticatedRoute = () => {
+const AuthenticatedRoute = (props) => {
     if (isUserLoggedIn()) {
-        return <Route {...this.props}/>
+        return <Route {...props}/>
     } else {
        return <Redirect to="/login"/> 
     }

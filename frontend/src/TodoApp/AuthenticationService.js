@@ -1,9 +1,11 @@
 import Axios from "axios";
+import { useContext } from "react";
 import {API_URL} from '../Constants';
+import { AuthContext } from "./AuthenticationContext";
 
 export const USER_NAME_SESSION_ATTRIBUTE = 'authenticatedUser';
 
-const AuthenticationService = () => {
+// const [token, setToken] = useContext(AuthContext);
 
     export const createJwtToken = (token) => {
         return 'Bearer ' + token;
@@ -16,7 +18,7 @@ const AuthenticationService = () => {
 
     export const registerSuccesfulLoginForJwt = (username, token) => {
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE, username)
-        this.setupAxiosInterceptors(createJwtToken(token));
+        setupAxiosInterceptors(createJwtToken(token));
     }
 
     export const logout = () => {
@@ -51,6 +53,4 @@ const AuthenticationService = () => {
             } 
         )
     }
-}
-
-export default AuthenticationService;
+    

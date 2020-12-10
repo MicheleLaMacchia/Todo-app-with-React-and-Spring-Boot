@@ -1,22 +1,21 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import moment from 'moment';
-import React, { useEffect } from 'react';
-import {retriveTodo, createTodo, updateTodo, getLoggedInUsername} from './TodoDataService';
+import React, { useEffect, useState } from 'react';
+import {retriveTodo, createTodo, updateTodo} from './TodoDataService';
+import {getLoggedInUsername} from './AuthenticationService';
 
 const TodoComponent = (props) => {
     const [id] = useState(props.match.params.id)
     const [description, setDescription] = useState('')
-    const [date, setDate] = useState(moment(new Date()).format('YYYY-MM-DD'))
+    const [targetDate, setTargetDate] = useState(null)
 
     useEffect(()=>{
-        if(this.state.id === -1)  {
-            return;
-        }
+        console.log('effect hook')
         let username = getLoggedInUsername();
         retriveTodo(username, id)
             .then(response => {
                 setDescription(response.data.description);
-                setDate(moment(response.data.targetDate).format('YYYY-MM-DD'))
+                setTargetDate(response.data.targetDate)
             })
     },[])
 
@@ -27,16 +26,17 @@ const TodoComponent = (props) => {
             description: val.description,
             targetDate: val.targetDate
         }
-        if (this.state.id === -1) {
+        if (id === -1) {
             createTodo(username, todo)
-                .then(()=>this.props.history.push(`/todos`))
+                .then(()=> props.history.push(`/todos`))
         } else {
-            updateTodo(username, this.state.id, todo)
-                .then(()=>this.props.history.push(`/todos`))
+            updateTodo(username, id, todo)
+                .then(()=> props.history.push(`/todos`))
         }
     }
 
     const validate = (val) => {
+        console.log(val)
         let errors = {}
         if(!val.description) {
             errors.description = 'Inserire una descrizione'
@@ -44,8 +44,10 @@ const TodoComponent = (props) => {
             errors.description = 'La descrizione dovrebbe avere almeno 5 caratteri'
         }
 
-        if(!moment(val.targetDate).isValid()) {
+        if(!moment(val.targetDate).isValid() | val.targetDate === undefined) {
             errors.targetDate = 'Inserire una data valida'
+        } else if(moment(val.targetDate).isBefore()) {
+            errors.targetDate = 'Inserire una data successiva ad oggi'
         }
         return errors;
     }
@@ -55,7 +57,7 @@ const TodoComponent = (props) => {
             <h1>Todo</h1>
             <div className="container">
                 <Formik
-                    initialValues={{description, date}}
+                    initialValues={{description, targetDate}}
                     onSubmit={onSubmit}
                     validateOnChange={false}
                     validateOnBlur={false}

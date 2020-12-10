@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import {deleteTodos, retriveAllTodos} from './TodoDataService';
 import {getLoggedInUsername} from './AuthenticationService';
+import moment from 'moment';
 
-const ListTodoComponent = () => {
+const ListTodoComponent = (props) => {
     const [todos, setTodos] = useState([]);
     const [message, setMessage] = useState(null);
+
     useEffect(() =>{
         refreshTodos();
     },[])
@@ -25,11 +27,11 @@ const ListTodoComponent = () => {
     }
 
     const updateTodoClicked = (id) => {
-        this.props.history.push(`/todos/${id}`)
+        props.history.push(`/todos/${id}`)
     }
 
     const addTodoClicked = () => {
-        this.props.history.push(`/todos/-1`)
+        props.history.push(`/todos/-1`)
     }
 
     return ( 
@@ -55,7 +57,7 @@ const ListTodoComponent = () => {
                                 <tr key={todo.id}>
                                     <td>{todo.id}</td>
                                     <td>{todo.description}</td>
-                                    <td>{todo.targetDate}</td>
+                                    <td>{moment(todo.targetDate).format('DD-MM-YYYY')}</td>
                                     <td>{todo.done.toString()}</td>
                                     <td><button className='btn btn-success' onClick={() => updateTodoClicked(todo.id)}>modifica</button></td>
                                     <td><button className='btn btn-warning' onClick={() => deleteTodoClicked(todo.id)}>elimina</button></td>

@@ -15,16 +15,15 @@ const LoginComponent = (props) => {
         setPassword(e.target.value)
     }
 
-    const loginClicked = (e) => {
-       
+    const loginClicked = () => {
         executeJwtAuthenticationService(username, password)
         .then((response) =>{
                 registerSuccesfulLoginForJwt(username, response.data.token)
                 props.history.push(`/welcome/${username}`)
         }).catch(() => {
             console.log('fail login')
-            setHasLoginFailed(false)
-            setShowSuccessMessage(true)
+            setHasLoginFailed(true)
+            setShowSuccessMessage(false)
         });
     }
 
