@@ -1,0 +1,2 @@
+- Quando si fa il refresh dell'app si perde il token; per evitare questo è possibile salvare il token nel 
+session storage e richiamarlo ogni volta che si monta un componente che ha bisogno di dati dal DB

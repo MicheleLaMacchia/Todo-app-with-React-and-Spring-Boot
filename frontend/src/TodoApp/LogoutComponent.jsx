@@ -1,13 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 const LogoutComponent = () => {
     return ( 
-        <div> 
+        <div className="container"> 
             <h1>Hai eseguito il log out</h1> 
-            <div className="container">
-                Grazie per aver usato la mia app
-            </div>
+            <h2>Clicca <Link to='/login'>qui</Link> per tornare al login</h2>
         </div>
      );
 }

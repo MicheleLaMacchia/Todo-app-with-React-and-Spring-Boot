@@ -7,7 +7,6 @@ const HeaderComponent = () => {
     const isLoggedIn = isUserLoggedIn();
 
     useEffect(() => {
-        console.log('logo')
         setLogo(getLoggedInUsername())
     },[isLoggedIn])
     
@@ -17,7 +16,7 @@ const HeaderComponent = () => {
                 <nav className='navbar navbar-expand-md navbar-dark bg-dark'>
                     <div className='navbar-brand'>{logo}</div>
                     <ul className='navbar-nav'>
-                        {isLoggedIn && <li ><Link className='nav-link' to='/welcome'>Home</Link></li>}
+                        {isLoggedIn && <li ><Link className='nav-link' to={`/welcome/${logo}`}>Home</Link></li>}
                         {isLoggedIn && <li ><Link className='nav-link' to='/todos'>Todos</Link></li>}
                     </ul>
                     <ul className='navbar-nav navbar-collapse justify-content-end'>
